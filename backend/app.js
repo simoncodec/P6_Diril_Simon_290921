@@ -8,3 +8,14 @@ app.use((req, res) => {
 });
 
 module.exports = app;
+
+// importation de mmongoose
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb+srv://raiden952:Xironman**@clusters.aqdlj.mongodb.net/Clusters?retryWrites=true&w=majority',
+  { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+  
