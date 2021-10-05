@@ -1,7 +1,8 @@
 // importation du framwork Express pour node.JS
 const express = require('express');
 
-
+const sauceRoutes = require('./routes/sauces');
+const userRoutes = require('./routes/user');
 
 const app = express();
 
@@ -31,3 +32,8 @@ app.use((req, res, next) =>{
     //on passe au middleware suivant
     next();
 });
+
+// utilisation des routes vers les sauces
+app.use('/api/sauces', sauceRoutes);
+// utilisation des routes vers les users
+app.use('/api/auth', userRoutes);
