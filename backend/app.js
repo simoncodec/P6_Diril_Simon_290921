@@ -1,25 +1,35 @@
-// importation du framwork Express pour node.JS
+// import framework Express pour node.js
 const express = require('express');
 
+// création des constantes pour importer les routes créées
 const sauceRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
-const app = express();
+// utilisation de path pour accéder au chemins des fichiers
+const path = require('path');
 
-app.use((req, res) => {
-   res.json({ message: 'Votre requête a bien été reçue !' }); 
-});
-
-module.exports = app;
-
-// importation de mmongoose
+//package pour faciliter les interaction avec MongoDB
+// import du package
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://raiden952:Xironman**@clusters.aqdlj.mongodb.net/Clusters?retryWrites=true&w=majority',
+const mongoSanitize = require('express-mongo-sanitize');
+
+// import d'helmet pour sécuriser les entetes requetes
+const helmet = require("helmet");
+
+// créé un environnement avec des variables confidentielles
+require('dotenv').config();
+
+
+// Connexion de l'API à MongoDB grace au package mongoose
+mongoose.connect(process.env.MONGO_DB,
   { useNewUrlParser: true,
-    useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+  useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !!!!!!'))
+  .catch(() => console.log('Connexion à MongoDB échouée ! :('));
+
+// mise en place du framework après importation
+const app = express();
 
 // paramétrage d'entete des requetes globales
 app.use((req, res, next) =>{
@@ -33,7 +43,20 @@ app.use((req, res, next) =>{
     next();
 });
 
+// remplace bodyparser et recupere requetes au format json
+app.use(express.json());
+
+// utilisation du package pour la protection contre les injections SQL
+app.use(mongoSanitize());
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+//applique le plugin helmet
+app.use(helmet());
+
 // utilisation des routes vers les sauces
 app.use('/api/sauces', sauceRoutes);
 // utilisation des routes vers les users
 app.use('/api/auth', userRoutes);
+
+module.exports = app;

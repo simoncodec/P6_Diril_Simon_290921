@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt"); //Permet de hasher les mots de passe
 const jwt = require('jsonwebtoken');
+const User = require("../models/modelsUser");
 
 
 exports.signup = (req, res, next) => {

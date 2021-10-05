@@ -2,7 +2,7 @@ const express = require('express');
 // création d'un routeur pour l'enregistrement des routes de nos sauces
 const router = express.Router();
 // récupération du controleur sauce
-const sauceCtrl = require('../controllers/sauces');
+const sauceCtrl = require('../controllers/sauce');
 // récupération du middleware d'authentification pour l'appiquer a nos routes
 const auth = require('../middleware/auth');
 // récupération du middleware multer
