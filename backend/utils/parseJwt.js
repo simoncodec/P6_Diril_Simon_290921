@@ -1,3 +1,4 @@
+const atob = require("atob");
 
 module.exports = function parseJwt (token) {
     var base64Url = token.split('.')[1];
