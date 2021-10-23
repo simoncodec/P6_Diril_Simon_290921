@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // constante qui permet de vérifier l'existence ou non de cette clé dans la BDD
 const uniqueValidator = require('mongoose-unique-validator');
+const passwordValidator = require("password-validator");
 
 const userSchemas = mongoose.Schema ({
 email: {type: String, required: true, unique: true},
